@@ -15,8 +15,8 @@ public class Dock {
 	}
 	
 	public String stats() {
-		
-		return null;
+		int shipLoading=ships.peekFirst().shipLoading();
+		return "В доке "+ships.size()+" кораблей. На обслуживаемом корбале сейчас "+shipLoading+" грузов";
 		
 	}
 	
