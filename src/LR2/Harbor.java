@@ -1,19 +1,30 @@
 package LR2;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.Vector;
 
 public class Harbor {
 	private String name;
-	private Vector<Dock> docks;
+	private Vector<Dock> docks=new Vector<Dock>();
 	private Warehouse warehouse;
 	private Logger logger;
 	
+	private LinkedList<Thread> threads=new LinkedList<Thread>() ;
 	public Harbor(String name,int countDocks, Logger logger) {
 		this.setName(name);
 		for(int i=0;i<countDocks;i++) {
 			Dock newDock=new Dock(i, this);
 			docks.add(newDock);
+			Runnable runDock=()->{try {
+				newDock.operate();
+			} catch (IOException | InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}};
+			Thread newThread=new Thread(runDock);
+			newThread.start();
+			threads.add(newThread);
 		}
 		this.warehouse=new Warehouse();
 		this.setLogger(logger);
@@ -28,8 +39,10 @@ public class Harbor {
 	}
 	
 	public void Observe() throws Exception {
-		Thread.sleep(5000);
-		stats();
+		while (true) {
+			stats();
+			Thread.sleep(5000);
+		}
 	}
 	
 	public void acceptShip(Ship ship) {

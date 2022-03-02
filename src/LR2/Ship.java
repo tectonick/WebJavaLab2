@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Ship {
 	private String name;
-	private Vector<Cargo> cargo;
+	private Deque<Cargo> cargo=new LinkedList<Cargo>();
 	private int request;
 	
 	public Ship(String name, int cargoCount, int request) {
@@ -15,6 +15,22 @@ public class Ship {
 			cargo.add(newCargo);
 		}
 		this.setRequest(request);
+	}
+	
+	public void loadCargo(Cargo cargoUnit) throws InterruptedException {
+		if (cargoUnit!=null) {
+			Thread.sleep(cargoUnit.getWeight()*1000);
+			cargo.addLast(cargoUnit);
+		}
+	}
+	public Cargo unloadCargo() throws InterruptedException {
+		if (!cargo.isEmpty()) {
+			Cargo cargoUnit=cargo.pollFirst();
+			Thread.sleep(cargoUnit.getWeight()*1000);
+			return cargoUnit;
+		} else {
+			return null;
+		}
 	}
 	
 	public int shipLoading() {

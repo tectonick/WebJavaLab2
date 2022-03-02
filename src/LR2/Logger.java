@@ -14,13 +14,19 @@ public class Logger {
 		this.filepath = filepath;
 	}
 	
-	public void consoleLog(String message) {
+	public synchronized void consoleLog(String message) {
 		System.out.println((new Date()).toString()+ ":"+message);
 	}
 	
-	public void fileLog(String message) throws IOException {
+	public synchronized void fileLog(String message) throws IOException {
 	         String log=new Date().toString()+":"+message;
-	         out.write(log);
+	         out.write(log+"\n");
+	         out.flush();
+	}
+	
+	public synchronized void log(String message) throws IOException {
+		consoleLog(message);
+		fileLog(message);
 	}
 	
 	public Logger(String filepath) throws IOException {
