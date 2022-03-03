@@ -4,11 +4,25 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+
+
+/**
+ * Основной класс приложения
+ * 
+ * @author      Киселев Николай <korn9509@gmail.com>
+ * @version     1.0                 
+ * @since       1.0          
+ */
 public class Application {
 
 	static final String LOGPATH = "log.txt";
 	static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 	
+	
+	/**
+	 * Основной метод приложения, создающий объекты гавани и кораблей.
+	 *          
+	 */
 	public static void main(String[] args) {
 		try {
 			Logger logger=new Logger(LOGPATH);

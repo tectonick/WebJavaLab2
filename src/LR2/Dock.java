@@ -3,18 +3,47 @@ package LR2;
 import java.io.IOException;
 import java.util.*;
 
+
+/**
+ * Класс причала
+ * 
+ * @author      Киселев Николай <korn9509@gmail.com>
+ * @version     1.0                 
+ * @since       1.0          
+ */
 public class Dock {
+	
+	/**
+	 * Идентификатор дока
+	 */
 	private int id;
+	/**
+	 * Очередь кораблей
+	 */
 	private Deque<Ship> ships=new LinkedList<Ship>();
+	/**
+	 * Объект родительской гавани
+	 */
 	private Harbor harbor;
 	
 	
-	
+	/**
+	 * Конструктор дока
+	 * @param  id Идентификатор дока
+	 * @param harbor Объект родительской гавани         
+	 */
 	public Dock(int id,Harbor harbor) {
 		this.setId(id);
 		this.harbor=harbor;
 	}
 	
+	
+	/**
+	 * Вывод статистики о доке и его кораблях в строку
+	 * 
+	 * 
+	 *@return String         
+	 */
 	public String stats() {
 		if (!ships.isEmpty()){
 			int shipLoading=ships.peekFirst().shipLoading();
@@ -24,6 +53,14 @@ public class Dock {
 	}
 	
 	
+	
+	
+	/**
+	 * Основной метод работы дока
+	 * 
+	 * <p>Обслуживает корабли, разгружает и загружает грузы</p>
+	 *          
+	 */
 	public void operate() throws IOException, InterruptedException {
 		Thread.sleep(1000);
 		harbor.getLogger().log("Док №"+id+ " начал свою работу");
@@ -54,6 +91,11 @@ public class Dock {
 		}
 	}
 	
+	
+	/**
+	 * Метод добавления нового корабля в очередь кораблей
+	 *          
+	 */
 	public  void acceptShip(Ship ship) {
 		ships.addLast(ship);
 	}
